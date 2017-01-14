@@ -9,7 +9,7 @@ if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['passwo
 	$password = md5($_GET['password']);
 
 	$sql = "SELECT PASSWORD FROM Users WHERE USERNAME = \"$username\"";
-	error_log($sql, 0);
+	// error_log($sql, 0);
 	$result = $conn->query($sql);
 	$pass = $result->fetch_assoc();
 
@@ -19,16 +19,15 @@ if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['passwo
 		$actual_password = $pass['PASSWORD'];
 		if ($password == $actual_password) {
 			$code = mt_rand(111111, 999999);
-			
+			$sql = "UPDATE Users SET CODE = $code WHERE USERNAME = \"$username\"";
+			error_log($sql);
+			$conn->query($sql);
 			$response['message'] = "User Verified";
+			$response['code'] = $code;
 		} else {
 			$response['error'] = "Wrong password entered for \"$username\"";
 		}
 	}
-
-	// print_r($result);
-	// print_r($pass);
-	// echo $actual_password;
 } else {
 	$response['error'] = "Invalid API call. Incomplete data.";
 }

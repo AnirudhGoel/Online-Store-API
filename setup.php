@@ -58,7 +58,7 @@ if ($num_of_rows["COUNT(*)"] == 0) {
 // 
 // Create table for Users
 // 
-$sql = "CREATE TABLE IF NOT EXISTS Users (ID INT(6) PRIMARY KEY AUTO_INCREMENT NOT NULL, USERNAME VARCHAR(30) NOT NULL UNIQUE, PASSWORD VARCHAR(300) NOT NULL, CODE VARCHAR(6))";
+$sql = "CREATE TABLE IF NOT EXISTS Users (ID INT(6) PRIMARY KEY AUTO_INCREMENT NOT NULL, USERNAME VARCHAR(30) NOT NULL UNIQUE, PASSWORD VARCHAR(300) NOT NULL, CODE INT(6))";
 
 if ($conn->query($sql) === TRUE) {
     echo "Table \"Users\" created successfully"."<br>";
