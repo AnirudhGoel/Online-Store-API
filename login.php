@@ -2,11 +2,11 @@
 
 $response = array();
 
-if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['password']) && !empty($_GET['password'])) {
+if (isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['method']) && $_POST['method'] == "login") {
 	require 'inc/connection.inc.php';
 
-	$username = $_GET['username'];
-	$password = md5($_GET['password']);
+	$username = $_POST['username'];
+	$password = md5($_POST['password']);
 
 	$sql = "SELECT PASSWORD FROM Users WHERE USERNAME = \"$username\"";
 	// error_log($sql, 0);
