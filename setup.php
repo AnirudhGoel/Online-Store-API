@@ -19,13 +19,14 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error creating database: " . $conn->error;
 }
+$conn->close();
 
-$conn = new mysqli($servername, $username, $password, $database);
 
 // 
 // Create table for Store
 // 
-$sql = "CREATE TABLE IF NOT EXISTS Store (ID INT(6) PRIMARY KEY AUTO_INCREMENT NOT NULL, NAME VARCHAR(30) NOT NULL,	QUANTITY INT(6) NOT NULL DEFAULT 0, DESCRIPTION VARCHAR(300), CATEGORY VARCHAR(20))";
+require "inc/connection.inc.php";
+$sql = "CREATE TABLE IF NOT EXISTS Store (ID INT(6) PRIMARY KEY AUTO_INCREMENT NOT NULL, NAME VARCHAR(30) NOT NULL,	PRODUCT_CODE INT(6) NOT NULL UNIQUE, QUANTITY INT(6) NOT NULL DEFAULT 0, DESCRIPTION VARCHAR(300), CATEGORY VARCHAR(20))";
 
 if ($conn->query($sql) === TRUE) {
     echo "Table \"Store\" created successfully"."<br>";
@@ -39,25 +40,28 @@ $num_of_rows = $result->fetch_assoc();
 // error_log($num_of_rows["COUNT(*)"], 0);
 if ($num_of_rows["COUNT(*)"] == 0) {
 	// Populating with sample data
-	$sql = "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY)
-	VALUES ('Apple', 450, 'California', 'Mobile');";
-	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY)
-	VALUES ('Mouse', 370, 'Wireless + Bluetooth', 'Computer Peripheral');";
-	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY)
-	VALUES ('Bru Classic', 500, 'Classic Coffee', 'Food Items')";
+	$sql = "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE)
+	VALUES ('Apple', 450, 'California', 'Mobile', 000001);";
+	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE)
+	VALUES ('Mouse', 370, 'Wireless + Bluetooth', 'Computer Peripheral', 000002);";
+	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE)
+	VALUES ('Bru Classic', 500, 'Classic Coffee', 'Food Items', 000003)";
 
 	if ($conn->multi_query($sql) === TRUE) {
-	    echo "New records created successfully";
+	    echo "New records created successfully<br>";
 	} else {
 	    echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 } else {
 	echo "Table \"Store\" already exits with some records.<br>";
 }
+$conn->close();
+
 
 // 
 // Create table for Users
 // 
+require "inc/connection.inc.php";
 $sql = "CREATE TABLE IF NOT EXISTS Users (ID INT(6) PRIMARY KEY AUTO_INCREMENT NOT NULL, USERNAME VARCHAR(30) NOT NULL UNIQUE, PASSWORD VARCHAR(300) NOT NULL, CODE INT(6))";
 
 if ($conn->query($sql) === TRUE) {
@@ -68,7 +72,7 @@ if ($conn->query($sql) === TRUE) {
 
 $sql = "SELECT COUNT(*) FROM Users";
 $result = $conn->query($sql);
-$num_of_rows = $result->fetch_assoc();
+$num_of_rows = $result->fetch_assoc() or die($conn->error);
 // error_log($num_of_rows["COUNT(*)"], 0);
 if ($num_of_rows["COUNT(*)"] == 0) {
 	// Populating with sample data

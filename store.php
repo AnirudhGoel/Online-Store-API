@@ -2,6 +2,9 @@
 
 $response = array();
 
+// 
+// LOGIN, ADD, EDIT, DELETE, SEARCH
+// 
 if (isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['method']) && $_POST['method'] == "login") {
 	require 'inc/connection.inc.php';
 
@@ -28,6 +31,8 @@ if (isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['pas
 			$response['error'] = "Wrong password entered for \"$username\"";
 		}
 	}
+} elseif (isset($_GET['code']) && !empty($_GET['code']) && isset($_GET['name']) && !empty($_GET['name']) && isset($_GET['quantity']) && !empty($_GET['quantity']) && isset($_GET['method']) && !empty($_GET['method'])) {
+	# code...
 } else {
 	$response['error'] = "Invalid API call. Incomplete data.";
 }
