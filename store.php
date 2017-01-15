@@ -6,9 +6,9 @@ require 'inc/connection.inc.php';
 // 
 // LOGIN, ADD, EDIT, DELETE, SEARCH
 // 
-if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['password']) && !empty($_GET['password']) && isset($_GET['method']) && $_GET['method'] == "login") {
-	$username = $_GET['username'];
-	$password = md5($_GET['password']);
+if (isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['method']) && $_POST['method'] == "login") {
+	$username = $_POST['username'];
+	$password = md5($_POST['password']);
 
 	$sql = "SELECT PASSWORD FROM Users WHERE USERNAME = \"$username\"";
 	$result = $conn->query($sql);
@@ -29,31 +29,31 @@ if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['passwo
 			$response['result'] = "Wrong password entered for \"$username\"";
 		}
 	}
-} elseif (isset($_GET['code']) && !empty($_GET['code'])) {
-	$code = $_GET['code'];
+} elseif (isset($_POST['code']) && !empty($_POST['code'])) {
+	$code = $_POST['code'];
 	$sql = "SELECT USERNAME FROM Users WHERE CODE = $code";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1) {
 		$row = $result->fetch_assoc();
 		$last_change_by = $row['USERNAME'];
 
-		if (isset($_GET['name']) && !empty($_GET['name']) && isset($_GET['quantity']) && !empty($_GET['quantity']) && isset($_GET['product_code']) && !empty($_GET['product_code']) && isset($_GET['method']) && $_GET['method'] == "add") {
+		if (isset($_POST['name']) && !empty($_POST['name']) && isset($_POST['quantity']) && !empty($_POST['quantity']) && isset($_POST['product_code']) && !empty($_POST['product_code']) && isset($_POST['method']) && $_POST['method'] == "add") {
 			// 
 			// ADD
 			// 
 
-			error_log($last_change_by."-".$_GET['method']);
+			error_log($last_change_by."-".$_POST['method']);
 
 			$sql1 = "INSERT INTO Store (LAST_CHANGE_BY, NAME, QUANTITY, PRODUCT_CODE";
-			$sql2 = ") VALUES (\"$last_change_by\", '".$_GET['name']."', ".$_GET['quantity'].", ".$_GET['product_code'];
+			$sql2 = ") VALUES (\"$last_change_by\", '".$_POST['name']."', ".$_POST['quantity'].", ".$_POST['product_code'];
 
-			if (isset($_GET['category']) && !empty($_GET['category'])) {
+			if (isset($_POST['category']) && !empty($_POST['category'])) {
 				$sql1 .= ", CATEGORY";
-				$sql2 .= ", '".$_GET['category']."'";
+				$sql2 .= ", '".$_POST['category']."'";
 			}
-			if (isset($_GET['description']) && !empty($_GET['description'])) {
+			if (isset($_POST['description']) && !empty($_POST['description'])) {
 				$sql1 .= ", DESCRIPTION";
-				$sql2 .= ", '".$_GET['description']."'";
+				$sql2 .= ", '".$_POST['description']."'";
 			}
 
 			$sql = $sql1.$sql2.")";
@@ -65,12 +65,13 @@ if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['passwo
 				$response['result'] = "Error adding record: ".$conn->error;
 			}
 
-		} elseif (isset($_GET['product_code']) && !empty($_GET['product_code']) && isset($_GET['method']) && $_GET['method'] == "delete") {
+		} elseif (isset($_POST['product_code']) && !empty($_POST['product_code']) && isset($_POST['method']) && $_POST['method'] == "delete") {
 			// 
 			// DELETE
 			// 
+			error_log($last_change_by."-".$_POST['method']);
 
-			$product_code = $_GET['product_code'];
+			$product_code = $_POST['product_code'];
 
 			$sql = "DELETE FROM Store WHERE PRODUCT_CODE = $product_code";
 			error_log($sql, 0);
@@ -80,20 +81,21 @@ if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['passwo
 				$response['result'] = "Error Deleting record:".$conn->error;
 			}
 
-		} elseif (isset($_GET['product_code']) && !empty($_GET['product_code']) && isset($_GET['method']) && $_GET['method'] == "modify") {
+		} elseif (isset($_POST['product_code']) && !empty($_POST['product_code']) && isset($_POST['method']) && $_POST['method'] == "modify") {
 			// 
 			// MODIFY
 			// 
+			error_log($last_change_by."-".$_POST['method']);
 
-			$product_code = $_GET['product_code'];
+			$product_code = $_POST['product_code'];
 
 			$sql1 = "UPDATE Store SET ";
 			$sql2 = "WHERE PRODUCT_CODE = $product_code";
 
-			if (isset($_GET['name']) && !empty($_GET['name'])) { $sql1 .= "NAME = '".$_GET['name']."', "; }
-			if (isset($_GET['quantity']) && !empty($_GET['quantity'])) { $sql .= "QUANTITY = ".$_GET['quantity'].", "; }
-			if (isset($_GET['category']) && !empty($_GET['category'])) { $sql .= "CATEGORY = '".$_GET['category']."', "; }
-			if (isset($_GET['description']) && !empty($_GET['description'])) { $sql .= "DESCRIPTION = '".$_GET['description']."', "; }
+			if (isset($_POST['name']) && !empty($_POST['name'])) { $sql1 .= "NAME = '".$_POST['name']."', "; }
+			if (isset($_POST['quantity']) && !empty($_POST['quantity'])) { $sql .= "QUANTITY = ".$_POST['quantity'].", "; }
+			if (isset($_POST['category']) && !empty($_POST['category'])) { $sql .= "CATEGORY = '".$_POST['category']."', "; }
+			if (isset($_POST['description']) && !empty($_POST['description'])) { $sql .= "DESCRIPTION = '".$_POST['description']."', "; }
 			$sql1 .= " LAST_CHANGE_BY = \"$last_change_by\" ";
 
 			$sql = $sql1.$sql2;
@@ -104,17 +106,17 @@ if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['passwo
 				$response['result'] = "Error Modifying Record: ".$conn->error;
 			}
 
-		} elseif (isset($_GET['method']) && $_GET['method'] == "search") {
+		} elseif (isset($_POST['method']) && $_POST['method'] == "search") {
 			// 
 			// SEARCH
 			// 
 
 			$sql = "SELECT * FROM Store WHERE ";
 			
-			if (isset($_GET['name']) && !empty($_GET['name'])) { $sql .= "NAME = '".$_GET['name']."' AND "; }
-			if (isset($_GET['product_code']) && !empty($_GET['product_code'])) { $sql .= "PRODUCT_CODE = ".$_GET['product_code']." AND "; }
-			if (isset($_GET['quantity']) && !empty($_GET['quantity'])) { $sql .= "QUANTITY = ".$_GET['quantity']." AND "; }
-			if (isset($_GET['category']) && !empty($_GET['category'])) { $sql .= "CATEGORY = '".$_GET['category']."' AND "; }
+			if (isset($_POST['name']) && !empty($_POST['name'])) { $sql .= "NAME = '".$_POST['name']."' AND "; }
+			if (isset($_POST['product_code']) && !empty($_POST['product_code'])) { $sql .= "PRODUCT_CODE = ".$_POST['product_code']." AND "; }
+			if (isset($_POST['quantity']) && !empty($_POST['quantity'])) { $sql .= "QUANTITY = ".$_POST['quantity']." AND "; }
+			if (isset($_POST['category']) && !empty($_POST['category'])) { $sql .= "CATEGORY = '".$_POST['category']."' AND "; }
 
 			$sql = rtrim($sql, " AND ");
 			$result = $conn->query($sql);
@@ -133,7 +135,7 @@ if (isset($_GET['username']) && !empty($_GET['username']) && isset($_GET['passwo
 			} else {
 				$response['result'] = "No Items found.";
 			}
-		} elseif (isset($_GET['method']) && $_GET['method'] == "display_all") {
+		} elseif (isset($_POST['method']) && $_POST['method'] == "display_all") {
 			// 
 			// DISPLAY ALL RECORDS
 			// 
