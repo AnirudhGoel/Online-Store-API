@@ -1,0 +1,31 @@
+@import 'https://fonts.googleapis.com/css?family=Lato:300,400';
+
+body {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.heading {
+	padding-left: 15px;
+	margin-bottom: 30px;
+}
+
+.box {
+	border: 1px solid #ddd;
+	min-height: 170px;
+	border-radius: 5px;
+	width: 100%;
+	margin-top: 70px;
+	padding: 0px 15px 15px 15px;
+}
+
+h4 {
+	font-size: 1.5em;
+}
+
+@media only screen and (min-width: 768px) {
+	.box {
+		width: 70%;
+		margin-left: 20%;
+		margin-top: 0px;
+	}
+}
