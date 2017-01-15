@@ -26,7 +26,7 @@ $conn->close();
 // Create table for Store
 // 
 require "inc/connection.inc.php";
-$sql = "CREATE TABLE IF NOT EXISTS Store (ID INT(6) PRIMARY KEY AUTO_INCREMENT NOT NULL, NAME VARCHAR(30) NOT NULL,	PRODUCT_CODE INT(6) NOT NULL UNIQUE, QUANTITY INT(6) NOT NULL DEFAULT 0, DESCRIPTION VARCHAR(300), CATEGORY VARCHAR(20))";
+$sql = "CREATE TABLE IF NOT EXISTS Store (ID INT(6) PRIMARY KEY AUTO_INCREMENT NOT NULL, NAME VARCHAR(30) NOT NULL,	PRODUCT_CODE INT(6) NOT NULL UNIQUE, QUANTITY INT(6) NOT NULL DEFAULT 0, DESCRIPTION VARCHAR(300), CATEGORY VARCHAR(20), LAST_CHANGE_BY VARCHAR(30) NOT NULL)";
 
 if ($conn->query($sql) === TRUE) {
     echo "Table \"Store\" created successfully"."<br>";
@@ -34,18 +34,16 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
-$sql = "SELECT COUNT(*) FROM Store";
+$sql = "SELECT * FROM Store";
 $result = $conn->query($sql);
-$num_of_rows = $result->fetch_assoc();
-// error_log($num_of_rows["COUNT(*)"], 0);
-if ($num_of_rows["COUNT(*)"] == 0) {
+if ($result->num_rows == 0) {
 	// Populating with sample data
-	$sql = "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE)
-	VALUES ('Apple', 450, 'California', 'Mobile', 000001);";
-	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE)
-	VALUES ('Mouse', 370, 'Wireless + Bluetooth', 'Computer Peripheral', 000002);";
-	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE)
-	VALUES ('Bru Classic', 500, 'Classic Coffee', 'Food Items', 000003)";
+	$sql = "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE, LAST_CHANGE_BY)
+	VALUES ('Apple', 450, 'California', 'Mobile', 000001, 'AnirudhGoel');";
+	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE, LAST_CHANGE_BY)
+	VALUES ('Mouse', 370, 'Wireless + Bluetooth', 'Computer Peripheral', 000002, 'AnirudhGoel');";
+	$sql .= "INSERT INTO Store (NAME, QUANTITY, DESCRIPTION, CATEGORY, PRODUCT_CODE, LAST_CHANGE_BY)
+	VALUES ('Bru Classic', 500, 'Classic Coffee', 'Food Items', 000003, 'AnirudhGoel')";
 
 	if ($conn->multi_query($sql) === TRUE) {
 	    echo "New records created successfully<br>";
@@ -70,11 +68,9 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
-$sql = "SELECT COUNT(*) FROM Users";
+$sql = "SELECT * FROM Users";
 $result = $conn->query($sql);
-$num_of_rows = $result->fetch_assoc() or die($conn->error);
-// error_log($num_of_rows["COUNT(*)"], 0);
-if ($num_of_rows["COUNT(*)"] == 0) {
+if ($result->num_rows == 0) {
 	// Populating with sample data
 	$sql = "INSERT INTO Users (USERNAME, PASSWORD)
 	VALUES ('AnirudhGoel', md5(\"password1\"));";
