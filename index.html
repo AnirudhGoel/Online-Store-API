@@ -30,13 +30,13 @@
 					<div id="home" class="tab-pane fade in active">
 						<form class="form-horizontal" onsubmit="login(event);">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="username">Username:</label>
+								<label class="control-label col-sm-2" for="username">*Username:</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="username" placeholder="Enter Username" required>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="password">Password:</label>
+								<label class="control-label col-sm-2" for="password">*Password:</label>
 								<div class="col-sm-10"> 
 									<input type="password" class="form-control" id="password" placeholder="Enter password" required>
 								</div>
@@ -49,25 +49,169 @@
 						</form>
 					</div>
 					<div id="menu1" class="tab-pane fade">
-						<h3>Add</h3>
-						<p>Some content in menu 1.</p>
+						<form class="form-horizontal" onsubmit="add(event);">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="code1">*Admin Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="code1" placeholder="Enter Admin Code" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="prod_code1">*Product Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="prod_code1" placeholder="Enter Product Code" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="name1">*Product Name:</label>
+								<div class="col-sm-10"> 
+									<input type="text" class="form-control" id="name1" placeholder="Enter Product Name" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="quantity1">*Quantity:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="quantity1" placeholder="Enter Quantity" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="category1">Category:</label>
+								<div class="col-sm-10"> 
+									<input type="text" class="form-control" id="category1" placeholder="Enter Category">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="description1">Description:</label>
+								<div class="col-sm-10"> 
+									<textarea class="form-control" id="description1" placeholder="Enter Product Description"></textarea>
+								</div>
+							</div>
+							<div class="form-group"> 
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-default">Add</button>
+								</div>
+							</div>
+						</form>
 					</div>
 					<div id="menu2" class="tab-pane fade">
-						<h3>Delete</h3>
-						<p>Some content in menu 2.</p>
+						<form class="form-horizontal" onsubmit="del(event);">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="code2">*Admin Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="code2" placeholder="Enter Admin Code" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="prod_code2">*Product Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="prod_code2" placeholder="Enter Product Code" required>
+								</div>
+							</div>
+							<div class="form-group"> 
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-default">Delete</button>
+								</div>
+							</div>
+						</form>
 					</div>
 					<div id="menu3" class="tab-pane fade">
-						<h3>Modify</h3>
-						<p>Some content in menu 2.</p>
+						<form class="form-horizontal" onsubmit="modify(event);">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="code3">*Admin Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="code3" placeholder="Enter Admin Code" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="prod_code3">*Product Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="prod_code3" placeholder="Enter Product Code" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="name3">Product Name:</label>
+								<div class="col-sm-10"> 
+									<input type="text" class="form-control" id="name3" placeholder="Enter Product Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="quantity3">Quantity:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="quantity3" placeholder="Enter Quantity">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="category3">Category:</label>
+								<div class="col-sm-10"> 
+									<input type="text" class="form-control" id="category3" placeholder="Enter Category">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="description3">Description:</label>
+								<div class="col-sm-10"> 
+									<textarea class="form-control" id="description3" placeholder="Enter Product Description"></textarea>
+								</div>
+							</div>
+							<div class="form-group"> 
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-default">Modify</button>
+								</div>
+							</div>
+						</form>
 					</div>
 					<div id="menu4" class="tab-pane fade">
-						<h3>Search</h3>
-						<p>Some content in menu 2.</p>
+						<form class="form-horizontal" onsubmit="search(event);">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="code4">*Admin Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="code4" placeholder="Enter Admin Code" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="prod_code4">Product Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="prod_code4" placeholder="Enter Product Code">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="name4">Product Name:</label>
+								<div class="col-sm-10"> 
+									<input type="text" class="form-control" id="name4" placeholder="Enter Product Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="quantity4">Quantity:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="quantity4" placeholder="Enter Quantity">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="category4">Category:</label>
+								<div class="col-sm-10"> 
+									<input type="text" class="form-control" id="category4" placeholder="Enter Category">
+								</div>
+							</div>
+							<div class="form-group"> 
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-default">Search</button>
+								</div>
+							</div>
+						</form>
 					</div>
 					<div id="menu5" class="tab-pane fade">
-						<br>
-						<button class="btn btn-md btn-success">List all</button>
-						<br><br>
+						<form class="form-horizontal" onsubmit="list_all(event);">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="code4">*Admin Code:</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="code4" placeholder="Enter Admin Code" required>
+								</div>
+							</div>
+							<div class="form-group"> 
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-default">List All</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -75,7 +219,7 @@
 				<div class="box">
 					<div class="api-heading"><h4>API Called</h4></div>
 					<br><br>
-					<div class="api-content"></div>
+					<pre class="api-content"></pre>
 				</div>
 			</div>
 		</div>

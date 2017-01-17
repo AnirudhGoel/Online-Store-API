@@ -73,12 +73,19 @@ if (isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['pas
 
 			$product_code = $_POST['product_code'];
 
-			$sql = "DELETE FROM Store WHERE PRODUCT_CODE = $product_code";
-			error_log($sql, 0);
-			if ($conn->query($sql)) {
-				$response['result'] = "Record Deleted successfully.";
+			$sql = "SELECT * FROM Store WHERE PRODUCT_CODE = $product_code";
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0) {
+				$sql = "DELETE FROM Store WHERE PRODUCT_CODE = $product_code";
+				error_log($sql, 0);
+				if ($conn->query($sql)) {
+					$response['result'] = "Record Deleted successfully.";
+				} else {
+					$response['result'] = "Error Deleting record:".$conn->error;
+				}
 			} else {
-				$response['result'] = "Error Deleting record:".$conn->error;
+				$response['result'] = "No record exists with Product code = $product_code";
 			}
 
 		} elseif (isset($_POST['product_code']) && !empty($_POST['product_code']) && isset($_POST['method']) && $_POST['method'] == "modify") {
@@ -119,6 +126,7 @@ if (isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['pas
 			if (isset($_POST['category']) && !empty($_POST['category'])) { $sql .= "CATEGORY = '".$_POST['category']."' AND "; }
 
 			$sql = rtrim($sql, " AND ");
+			error_log($sql, 0);
 			$result = $conn->query($sql);
 			$i = 0;
 
@@ -130,6 +138,7 @@ if (isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['pas
 					$response[$i]['Quantity'] = $row['QUANTITY'];
 					$response[$i]['Category'] = $row['CATEGORY'];
 					$response[$i]['Description'] = $row['DESCRIPTION'];
+					$response[$i]['Last Change By'] = $row['LAST_CHANGE_BY'];
 					$i += 1;
 				}
 			} else {
