@@ -94,8 +94,9 @@ function search(event) {
 	});
 }
 
-function list_all() {
-	var code = $("#code4").val();
+function list_all(event) {
+	event.preventDefault();
+	var code = $("#code5").val();
 
 	api_called = api_called_base + "method: display_all<br>code: " + code;
 	$(".api-called-content").html(api_called);
